@@ -46,7 +46,7 @@
         getSites('https://ideal-status.herokuapp.com/sites').then(obj => {
             obj.map(site => {
                 console.log(site);
-                site = `https://${site.trim()}/`;
+                site = `http://${site.trim()}/`;
                 status = fetch(site).then(obj =>{
                     if (obj.status == 200 || obj.status == 201){
                         tableColor = 'success';
