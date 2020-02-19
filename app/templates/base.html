@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+		<title>Ideal Status</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+	</head>
+	<body>
+		<div class="container pt-5">
+			{% block content %}
+			{% endblock %}
+		</div>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+		<script>
+			$(document).ready(function(){
+          $("#buscar").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $(".table tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+
+
+
+          async function getSites(sites){
+            const request = await fetch(sites);
+            return await request.json();
+        }
+
+        function appendStatus(tbody, tableColor, url, status){
+            tbody.append(
+            `<tr class="table-${tableColor}">
+                <td>${url}</td>
+                <td class="">${status}</td>
+            </tr>`
+            );    
+        }
+
+        let tableColor = '';
+
+        const sitesTable = $('#sitesTable');
+        const sitesTableError = $('#sitesTableError');
+        const sitesTableWarning = $('#sitesTableWarning');
+
+        getSites('http://127.0.0.1:5000/sites').then(obj => {
+            obj.map(site => {
+                console.log(site);
+                site = `http://${site.trim()}/`;
+                status = fetch(site).then(obj =>{
+                    if (obj.status == 200 || obj.status == 201){
+                        tableColor = 'success';
+                        appendStatus(sitesTable, tableColor, obj.url, obj.status)
+                    }else if (obj.status == 301 || obj.status == 302 || obj.status == 304){
+                        tableColor = 'warning';
+                        appendStatus(sitesTableWarning, tableColor, obj.url, obj.status)
+                        
+                    }else{
+                        tableColor = 'danger';
+                        appendStatus(sitesTableError, tableColor, obj.url, obj.status)
+                    }
+                }).catch(err => {
+                    tableColor = 'danger';
+                    appendStatus(sitesTableError, tableColor, site, '404')
+                });
+            });
+        });
+        });
+
+		</script>
+	</body>
+</html>

@@ -1,1 +1,1 @@
-web: gunicorn run:app --max-requests 0
+web: gunicorn run:app --timeout 3600 --graceful-timeout 3600
