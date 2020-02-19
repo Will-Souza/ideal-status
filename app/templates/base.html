@@ -43,7 +43,7 @@
         const sitesTableError = $('#sitesTableError');
         const sitesTableWarning = $('#sitesTableWarning');
 
-        getSites('https://ideal-status.herokuapp.com/sites').then(obj => {
+        getSites('http://ideal-status.herokuapp.com/sites').then(obj => {
             obj.map(site => {
                 console.log(site);
                 site = `http://${site.trim()}/`;
