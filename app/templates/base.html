@@ -14,6 +14,12 @@
 		<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 		<script>
 			$(document).ready(function(){
+
+            const allSitesCount = parseInt("{{data}}");
+            let sitesCount = 0;
+            console.log(allSitesCount);
+            
+
           $("#buscar").on("keyup", function() {
             var value = $(this).val().toLowerCase();
             $(".table tr").filter(function() {
@@ -43,7 +49,9 @@
         const sitesTableError = $('#sitesTableError');
         const sitesTableWarning = $('#sitesTableWarning');
 
-        getSites('https://ideal-status.herokuapp.com/sites').then(obj => {
+        // url = 'http://127.0.0.1:5000/sites';
+        url = 'https://ideal-status.herokuapp.com/sites';
+        getSites(url).then(obj => {
             obj.map(site => {
                 console.log(site);
                 site = `http://${site.trim()}/`;
@@ -51,20 +59,28 @@
                     if (obj.status == 200 || obj.status == 201){
                         tableColor = 'success';
                         appendStatus(sitesTable, tableColor, obj.url, obj.status)
+                        sitesCount++;
+                        $('.progress-bar').width(`${sitesCount*100/allSitesCount}%`);
                     }else if (obj.status == 301 || obj.status == 302 || obj.status == 304){
                         tableColor = 'warning';
                         appendStatus(sitesTableWarning, tableColor, obj.url, obj.status)
-                        
+                        sitesCount++;
+                        $('.progress-bar').width(`${sitesCount*100/allSitesCount}%`);
                     }else{
                         tableColor = 'danger';
                         appendStatus(sitesTableError, tableColor, obj.url, obj.status)
+                        sitesCount++;
+                        $('.progress-bar').width(`${sitesCount*100/allSitesCount}%`);
                     }
                 }).catch(err => {
                     tableColor = 'danger';
                     appendStatus(sitesTableError, tableColor, site, '404')
+                    sitesCount++;
+                    $('.progress-bar').width(`${sitesCount*100/allSitesCount}%`);
                 });
             });
         });
+        console.log(sitesCount);
         });
 
 		</script>

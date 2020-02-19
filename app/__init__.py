@@ -4,11 +4,12 @@ import app
 
 app = Flask(__name__)
 
+data = json.load(open('sites.json'))
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', data=len(data['sites']))
 
 @app.route('/sites')
 def sites():
-    data = json.load(open('sites.json'))
     return jsonify(data['sites'])
