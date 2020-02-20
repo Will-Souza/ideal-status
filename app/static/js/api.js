@@ -3,7 +3,7 @@ $(document).ready(function(){
     const allSitesCount = parseInt($('#allSitesCount').text());
     const sitesTable = $('#sitesTable');
     const sitesTableError = $('#sitesTableError');
-    const sites = 'http://127.0.0.1:5000/sites';
+    const sites = 'https://ideal-status.herokuapp.com/sites';
     const okSitesCount = $('#okSitesCount');
     const errorSitesCount = $('#errorSitesCount');
     const verify = $('#verify');
@@ -37,9 +37,6 @@ $(document).ready(function(){
         $.ajax({
             url: sites,
             method: 'GET',
-            beforeSend: function() {
-                
-            },
             success: function(response) {
                 response.map(function(site) {
                     getStatus(site);
@@ -50,22 +47,30 @@ $(document).ready(function(){
 
     function getStatus(site){
         $.ajax({
-            url: site,
+            url: `http://${site}`,
             method: 'GET',
+            dataType: 'jsonp',
             success: function(data, textStatus, xhr) {
-                appendResult(sitesTable, 'success', site, xhr.status);
+                appendResult(site, xhr.status);
             },
             error: function(xhr, ajaxOptions, thrownError){
                 console.log(xhr.status)
-                appendResult(sitesTableError, 'danger', site, xhr.status);
+                appendResult(site, xhr.status);
             }
         });
     }
 
-    function appendResult(tbody, trColor, url, status){
+    function appendResult(url, status){
+        if (status == 200){
+            trColor = 'success';
+            tbody = sitesTable;
+        }else{
+            trColor = 'danger';
+            tbody = sitesTableError;
+        }
         tbody.append(
             `<tr class="tr-background-${trColor}">
-                <td><a href="${url}" target="_blank">${url}</a></td>
+                <td><a href="http://${url}" target="_blank">${url}</a></td>
                 <td class="">${status}</td>
             </tr>`
         );
