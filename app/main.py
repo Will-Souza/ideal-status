@@ -40,6 +40,15 @@ def delete_projeto(projeto_id):
     return redirect(url_for('main.painel'))
 
 
+@main.route("/projetos/<int:projeto_id>/edit", methods=['GET', 'POST'])
+def edit_projeto(projeto_id):
+    projeto = Projetos.query.get_or_404(projeto_id)
+    projeto.protocol = request.form['protocol']
+    projeto.url = request.form['url']
+    db.session.commit()
+    return redirect(url_for('main.painel'))
+
+
 @main.route('/sites')
 def sites():
     return jsonify(data['sites'])

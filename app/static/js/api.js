@@ -89,6 +89,25 @@ $(document).ready(function(){
         getSites(sites);
     });
 
+    // ======================= PAINEL ==========================
+    
+    const painelProtocol =  $('.painelProtocol');
+    const painelEditar =  $('.painelEditar');
+    const painelSalvar =  $('.painelSalvar');
+
+    painelSalvar.hide();
+
+
+    painelProtocol.each(function() {
+        $(this).val($(this).data('selected'));
+    });
+
+    painelEditar.click(function() {
+        $(this).hide();
+        $(this).parent().find(painelSalvar).show();
+        $(this).parent().parent().find('select, input').removeAttr('disabled');
+    });
+
 
 
 

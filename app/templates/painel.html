@@ -39,13 +39,23 @@
             <tbody>
                 {% if projetos %}
                     {% for projeto in projetos %}
+                    <form action="{{ url_for('main.edit_projeto', projeto_id=projeto.id) }}" method="POST">
                         <tr>
                             <td>{{projeto.id}}</td>
-                            <td>{{projeto.protocol}}</td>
-                            <td>{{projeto.url}}</td>
+                            <td>
+                                <div class="select is-fullwidth">
+                                    <select name="protocol" class="painelProtocol" data-selected="{{projeto.protocol}}" required disabled>
+                                        <option value="">Protocolo</option>  
+                                        <option value="http://">http://</option>
+                                        <option value="https://">https://</option>
+                                    </select>
+                                  </div>
+                            </td>
+                            <td><input name="url" class="input" type="text" placeholder="Url (site.com.br)" value="{{projeto.url}}" required disabled></td>
                             <td>{{projeto.date_posted.strftime('%d/%m/%Y às %H:%M')}}</td>
-                            <td><a href="#">Editar</a> | <a href="{{ url_for('main.delete_projeto', projeto_id=projeto.id) }}" class="has-text-danger">Excluir</a></td>
+                            <td><input type="submit" value="Salvar" class="painelSalvar button is-success"> <a href="#" class="painelEditar button is-info">Editar</a> <a href="{{ url_for('main.delete_projeto', projeto_id=projeto.id) }}" class="button is-danger">Excluir</a></td>
                         </tr>
+                    </form>
                     {% endfor %}
                 {% endif %}
                 
