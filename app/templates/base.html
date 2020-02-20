@@ -1,88 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-	<head>
-		<meta charset="UTF-8">
-		<title>Ideal Status</title>
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-	</head>
-	<body>
-		<div class="container pt-5">
-			{% block content %}
-			{% endblock %}
-		</div>
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-		<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-		<script>
-			$(document).ready(function(){
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-            const allSitesCount = parseInt("{{data}}");
-            let sitesCount = 0;
-            console.log(allSitesCount);
-            
+    <meta property="og:title" content="GAMPLACE">
+    <meta property="og:description" content="There's no place like GAM.">
+    <meta property="og:url" content="https://gamplace.com">
+    <meta property="og:image" content="{{url_for('static', filename='img/gatinho.jpg')}}">
+    <meta property="og:image:width" content="500">
+    <meta property="og:image:height" content="500">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    
 
-          $("#buscar").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $(".table tr").filter(function() {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-          });
+    <title>Gamplace</title>
+  </head>
+  <body>
+      {% include 'navbar.html' %}
+      
+      {% block content %}
+      {% endblock %}
 
-
-
-          async function getSites(sites){
-            const request = await fetch(sites);
-            return await request.json();
-        }
-
-        function appendStatus(tbody, tableColor, url, status){
-            tbody.append(
-            `<tr class="table-${tableColor}">
-                <td>${url}</td>
-                <td class="">${status}</td>
-            </tr>`
-            );    
-        }
-
-        let tableColor = '';
-
-        const sitesTable = $('#sitesTable');
-        const sitesTableError = $('#sitesTableError');
-        const sitesTableWarning = $('#sitesTableWarning');
-
-        // url = 'http://127.0.0.1:5000/sites';
-        url = 'https://ideal-status.herokuapp.com/sites';
-        getSites(url).then(obj => {
-            obj.map(site => {
-                console.log(site);
-                site = `http://${site.trim()}/`;
-                status = fetch(site).then(obj =>{
-                    if (obj.status == 200 || obj.status == 201){
-                        tableColor = 'success';
-                        appendStatus(sitesTable, tableColor, obj.url, obj.status)
-                        sitesCount++;
-                        $('.progress-bar').width(`${sitesCount*100/allSitesCount}%`);
-                    }else if (obj.status == 301 || obj.status == 302 || obj.status == 304){
-                        tableColor = 'warning';
-                        appendStatus(sitesTableWarning, tableColor, obj.url, obj.status)
-                        sitesCount++;
-                        $('.progress-bar').width(`${sitesCount*100/allSitesCount}%`);
-                    }else{
-                        tableColor = 'danger';
-                        appendStatus(sitesTableError, tableColor, obj.url, obj.status)
-                        sitesCount++;
-                        $('.progress-bar').width(`${sitesCount*100/allSitesCount}%`);
-                    }
-                }).catch(err => {
-                    tableColor = 'danger';
-                    appendStatus(sitesTableError, tableColor, site, '404')
-                    sitesCount++;
-                    $('.progress-bar').width(`${sitesCount*100/allSitesCount}%`);
-                });
-            });
-        });
-        console.log(sitesCount);
-        });
-
-		</script>
-	</body>
+      <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+      {% if current_user.is_authenticated %}
+      <script src="{{ url_for('static', filename='js/api.js') }}"></script>
+      {% endif %}
+  </body>
 </html>

@@ -1,0 +1,52 @@
+<nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar-desk">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            </a>
+        </div>
+    
+        <div id="navbar-desk" class="navbar-menu">
+            <div class="navbar-start">
+            <a href="{{url_for('main.index')}}" class="navbar-item">
+                Página inicial
+            </a>
+    
+            {% if current_user.is_authenticated %}
+            <a href="{{url_for('main.painel')}}" class="navbar-item">
+                Painel
+            </a>
+            {% endif %}
+            </div>
+    
+            <div class="navbar-end">
+                {% if current_user.is_authenticated %}
+                <a href="{{url_for('main.profile')}}" class="navbar-item">
+                    {{current_user.name}}
+                </a>
+                {% endif %}
+            <div class="navbar-item">
+                <div class="buttons">
+                {% if not current_user.is_authenticated %}
+                <a href="{{url_for('auth.signup')}}" class="button is-primary">
+                    <strong>Cadastrar</strong>
+                </a>
+                <a href="{{url_for('auth.login')}}" class="button is-light">
+                    Entrar
+                </a>
+                {% endif %}
+    
+                {% if current_user.is_authenticated %}
+                
+                <a href="{{url_for('auth.logout')}}" class="button is-danger">
+                    <strong>Sair</strong>
+                </a>
+                {% endif %}
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</nav>

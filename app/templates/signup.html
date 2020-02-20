@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="section">
+<div class="container">
+
+    <div class="columns">
+        <div class="column">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="notification is-danger is-light">
+                <button class="delete"></button>
+                {{ message }}</a>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <form action="" method="POST">
+              {{ form.csrf_token }}
+              <div class="field">
+                {{ form.name.label(class_='label') }}
+                <div class="control">
+                  {{ form.name(class_='input', placeholder='Digite seu nome') }}
+                  {% for error in form.name.errors %}
+                    <p class="help is-danger">{{error}}</p>
+                  {% endfor %}
+                </div>
+              </div>
+                  
+                  <div class="field">
+                    {{ form.username.label(class_='label') }}
+                    <div class="control">
+                      {{ form.username(class_='input', placeholder='Digite seu nome de usuário') }}
+                      {% for error in form.username.errors %}
+                        <p class="help is-danger">{{error}}</p>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  
+                  <div class="field">
+                    {{ form.email.label(class_='label') }}
+                    <div class="control">
+                      {{ form.email(class_='input', placeholder='Digite seu e-mail') }}
+                      {% for error in form.email.errors %}
+                        <p class="help is-danger">{{error}}</p>
+                      {% endfor %}
+                    </div>
+                  </div>
+        
+                  <div class="field">
+                    {{ form.password.label(class_='label') }}
+                    <div class="control">
+                      {{ form.password(class_='input', placeholder='Insira sua senha') }}
+                      {% for error in form.password.errors %}
+                        <p class="help is-danger">{{error}}</p>
+                      {% endfor %}
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    {{ form.confirm.label(class_='label') }}
+                    <div class="control">
+                      {{ form.confirm(class_='input', placeholder='Insira sua senha novamente') }}
+                      {% for error in form.confirm.errors %}
+                        <p class="help is-danger">{{error}}</p>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  
+                  <div class="field is-grouped">
+                    <div class="control">
+                      {{ form.submit(class_='button is-primary') }}
+                    </div>
+                    <div class="control">
+                      {{ form.cancel(class_='button is-light', type='button') }}
+                    </div>
+                  </div>
+            </form>
+        </div>
+        <div class="column">
+
+        </div>
+    </div>
+</div>
+    
+</section>
+
+{% endblock %}

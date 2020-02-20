@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        {% if user %}
+            <h2 class="title">Perfil de {{ user.name }}</h2>
+            <p class="subtitle"><a href="{{ url_for('main.profile')+'/'+user.username }}">@{{ user.username }}</a> | {{ user.email }}</p>
+        {% else %}
+            <h2 class="title">Usuário não encontrado.</h2>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
