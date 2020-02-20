@@ -3,7 +3,7 @@ $(document).ready(function(){
     const allSitesCount = parseInt($('#allSitesCount').text());
     const sitesTable = $('#sitesTable');
     const sitesTableError = $('#sitesTableError');
-    const sites = 'https://ideal-status.herokuapp.com/sites';
+    const sites = 'http://ideal-status.herokuapp.com/sites';
     const okSitesCount = $('#okSitesCount');
     const errorSitesCount = $('#errorSitesCount');
     const verify = $('#verify');
@@ -12,6 +12,7 @@ $(document).ready(function(){
     let sitesCount = 0;
     let sitesError = 0;
     let sitesOk = 0;
+    let percent = 0;
 
     
     $("#buscar").on("keyup", function() {
@@ -30,7 +31,12 @@ $(document).ready(function(){
             sitesError++;
             errorSitesCount.text(sitesError);
         }
-        progressBar.val(sitesCount*100/allSitesCount);
+        percent = sitesCount*100/allSitesCount;
+        progressBar.val(percent);
+        if (percent == 100){
+            verify.removeAttr('disabled');
+        }
+        
     }
 
     function getSites(sites){
@@ -78,6 +84,8 @@ $(document).ready(function(){
     }
 
     verify.click(function() {
+        verify.attr('disabled', 'disabled');
+        progressBar.val(0);
         getSites(sites);
     });
 

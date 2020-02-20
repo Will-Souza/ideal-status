@@ -20,7 +20,7 @@
               <div class="field">
                 {{ form.name.label(class_='label') }}
                 <div class="control">
-                  {{ form.name(class_='input', placeholder='Digite seu nome') }}
+                  {{ form.name(class_='input', placeholder='Digite seu nome', autofocus='') }}
                   {% for error in form.name.errors %}
                     <p class="help is-danger">{{error}}</p>
                   {% endfor %}
