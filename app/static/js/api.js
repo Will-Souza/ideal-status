@@ -3,7 +3,7 @@ $(document).ready(function(){
     const allSitesCount = parseInt($('#allSitesCount').text());
     const sitesTable = $('#sitesTable');
     const sitesTableError = $('#sitesTableError');
-    const sites = 'http://ideal-status.herokuapp.com/sites';
+    const sites = 'http://ideal-status.herokuapp.com/projetos';
     const okSitesCount = $('#okSitesCount');
     const errorSitesCount = $('#errorSitesCount');
     const verify = $('#verify');
@@ -53,7 +53,7 @@ $(document).ready(function(){
 
     function getStatus(site){
         $.ajax({
-            url: `http://${site}`,
+            url: site,
             method: 'GET',
             dataType: 'jsonp',
             success: function(data, textStatus, xhr) {

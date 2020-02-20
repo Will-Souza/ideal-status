@@ -20,6 +20,31 @@ def painel():
     return render_template('painel.html', projetos=projetos)
 
 
+@main.route('/sites')
+def sites():
+    return jsonify(data['sites'])
+
+
+@main.route('/import')
+def import_sites():
+    for site in data['sites']:
+        exist = Projetos.query.filter_by(url=site).first()
+        if not exist:
+            projeto = Projetos(url=site)
+            db.session.add(projeto)
+            db.session.commit()
+    return 'ok'
+
+
+@main.route('/projetos')
+def projetos():
+    projetos = Projetos.query.all()
+    all_projetos = []
+    for projeto in projetos:
+        all_projetos.append(f'{projeto.protocol}{projeto.url}')
+    return jsonify(all_projetos)
+
+
 @main.route('/projetos/new', methods=['GET', 'POST'])
 def new_projeto():
     if request.method == 'POST':
@@ -47,11 +72,6 @@ def edit_projeto(projeto_id):
     projeto.url = request.form['url']
     db.session.commit()
     return redirect(url_for('main.painel'))
-
-
-@main.route('/sites')
-def sites():
-    return jsonify(data['sites'])
 
 
 @main.route('/profile/<string:username>')
