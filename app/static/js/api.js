@@ -108,8 +108,5 @@ $(document).ready(function(){
         $(this).parent().parent().find('select, input').removeAttr('disabled');
     });
 
-
-
-
   
 });

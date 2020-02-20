@@ -16,7 +16,7 @@ def index():
 
 @main.route('/painel')
 def painel():
-    projetos = Projetos.query.all()
+    projetos = Projetos.query.order_by(Projetos.id.desc()).all()
     return render_template('painel.html', projetos=projetos)
 
 
