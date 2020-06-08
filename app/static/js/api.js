@@ -76,7 +76,7 @@ $(document).ready(function(){
         }
         tbody.append(
             `<tr class="tr-background-${trColor}">
-                <td><a href="http://${url}" target="_blank">${url}</a></td>
+                <td><a href="${url}" target="_blank">${url}</a></td>
                 <td class="">${status}</td>
             </tr>`
         );
