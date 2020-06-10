@@ -21,7 +21,7 @@ class RegistrationForm(FlaskForm):
         InputRequired('Digite um nome de usuário')
     ])
     email = StringField('E-mail', validators=[
-        Length(min=6, max=32, message='O e-mail deve conter entre 6 e 32 caracteres'),
+        Length(min=6, max=255, message='O e-mail deve conter entre 6 e 255 caracteres'),
         InputRequired('Digite seu e-mail')
     ])
     password = PasswordField('Senha', validators=[
