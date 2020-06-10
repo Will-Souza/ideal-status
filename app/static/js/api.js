@@ -3,7 +3,7 @@ $(document).ready(function(){
     const allSitesCount = parseInt($('#allSitesCount').text());
     const sitesTable = $('#sitesTable');
     const sitesTableError = $('#sitesTableError');
-    const sites = 'http://ideal-status.herokuapp.com/projetos';
+    const sites = 'http://127.0.0.1:5000/projetos';
     const okSitesCount = $('#okSitesCount');
     const errorSitesCount = $('#errorSitesCount');
     const verify = $('#verify');
@@ -19,6 +19,13 @@ $(document).ready(function(){
         var value = $(this).val().toLowerCase();
         $(".table tr").filter(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    $("#buscarPainel").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $(".table tr td input[type='text']").filter(function() {
+            $(this).parent().parent().toggle($(this).val().toLowerCase().indexOf(value) > -1)
         });
     });
 

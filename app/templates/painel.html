@@ -3,6 +3,14 @@
 <section class="section">
     <div class="container">
         <h2 class="title">Painel administrativo</h2>
+        <div class="columns">
+            <div class="column is-2">
+                <h3 class="title">Buscar:</h3>
+            </div>
+            <div class="column is-4">
+                <input type="text" id="buscarPainel" class="input" placeholder="Digite a url do site">
+            </div>
+        </div>
         <form action="{{ url_for('main.new_projeto') }}" method="POST" style="margin-bottom: 20px;">
             <div class="columns">
                 <div class="column is-3">
