@@ -3,7 +3,7 @@ $(document).ready(function(){
     const allSitesCount = parseInt($('#allSitesCount').text());
     const sitesTable = $('#sitesTable');
     const sitesTableError = $('#sitesTableError');
-    const sites = 'http://127.0.0.1:5000/projetos';
+    const sites = 'http://ideal-status.herokuapp.com/projetos';
     const okSitesCount = $('#okSitesCount');
     const errorSitesCount = $('#errorSitesCount');
     const verify = $('#verify');
